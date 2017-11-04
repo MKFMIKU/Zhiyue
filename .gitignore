@@ -11,9 +11,6 @@
 /.tern-project
 .phpintel/
 
-### Compile
-scripts/.pid.*
-scripts/.sass_log
-.sass-cache
-/.php_cs.cache
-node_modules/
+### Composer
+vendor
+composer.lock
