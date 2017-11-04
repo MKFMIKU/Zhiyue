@@ -3,3 +3,12 @@
 </p>
 
 # The Zhiyue project
+
+## Installation
+
++ Add new virtual host to nginx like [this](nginx.conf)
++ Add new line to Hosts
+
+```
+127.0.0.1 api.zhiyue.co
+```
