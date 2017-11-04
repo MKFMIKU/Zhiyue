@@ -1,0 +1,19 @@
+### TEMP FILES
+*.tmp
+*.bak
+*.swp
+*~.nib
+*.launch
+.DS_Store
+
+### PHPSTORM
+.idea/
+/.tern-project
+.phpintel/
+
+### Compile
+scripts/.pid.*
+scripts/.sass_log
+.sass-cache
+/.php_cs.cache
+node_modules/
