@@ -8,7 +8,6 @@
 
 namespace lib;
 use PDO;
-use lib\Config;
 
 /**
  * Class Core

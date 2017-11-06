@@ -7,13 +7,14 @@
  */
 
 require '../vendor/autoload.php';
-require 'configs/dev.config.php';
+$config = require __DIR__ . '/config.php';
 
 session_start();
 
-$app = new \Slim\App();
+$app = new \Slim\App(["settings" => $config]);
 
 $container = $app->getContainer();
+
 $container['logger'] = function($c) {
     $logger = new \Monolog\Logger('Zhiyue');
     $file_handler = new \Monolog\Handler\StreamHandler("../logs/app.log");
@@ -21,13 +22,25 @@ $container['logger'] = function($c) {
     return $logger;
 };
 
-$app->get('/status', function ($request, $response, $args) {
-    $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
-    return $response->write(json_encode([
-        'code' => '200',
-        'msg' => 'ok'
-    ]));
-});
+$container['notFoundHandler'] = function ($request, \Slim\Http\Response $response) {
+    return $response
+        ->withStatus(404)
+        ->withHeader('Content-type', 'application/json')
+        ->write(json_encode([
+            'code' => '404',
+            'msg' => 'Not Found URL'
+        ]));
+};
+
+$container['errorHandler'] = function ($request, \Slim\Http\Response $response, Exception $exception) {
+    return $response
+        ->withStatus(500)
+        ->write(json_encode([
+            'code' => '500',
+            'msg' => 'Server Error',
+            'trace' => $exception->getTrace()
+        ]));
+};
 
 $routers = glob('routers/*.router.php');
 foreach ($routers as $router) {
